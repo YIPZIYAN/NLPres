@@ -5,4 +5,5 @@ definePageMeta({
 </script>
 <template>
   HomePage
+  <UButton>Submit</UButton>
 </template>
