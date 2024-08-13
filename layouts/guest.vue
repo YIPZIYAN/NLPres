@@ -38,7 +38,7 @@ const mobileLinks = [...links, {
 
           <UModal v-model="isOpen" fullscreen>
             <div class="p-6">
-              <UVerticalNavigation @click="isOpen = false" :links="mobileLinks" />
+              <UVerticalNavigation @click="isOpen = false" :links="mobileLinks"/>
             </div>
           </UModal>
         </div>
@@ -64,5 +64,7 @@ const mobileLinks = [...links, {
     </nav>
   </header>
   <!-- ========== END HEADER ========== -->
-  <slot></slot>
+
+  <slot/>
+
 </template>
