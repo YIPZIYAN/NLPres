@@ -23,14 +23,17 @@ const mobileLinks = [...links, {
   <header
       class="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full bg-white border-b border-gray-200 dark:bg-neutral-800 dark:border-neutral-700">
     <nav
-        class="relative max-w-[85rem] w-full md:flex md:items-center md:justify-between md:gap-3 mx-auto px-4 pt-2">
+        class="px-4 pt-4 pb-4 relative max-w-[85rem] w-full md:flex md:items-center md:justify-between md:gap-3 mx-auto md:px-4 md:pt-2 md:pb-0 ">
       <!-- Logo w/ Collapse Button -->
       <div class="flex items-center justify-between ml-2">
         <a class="flex-none font-semibold text-xl text-black focus:outline-none focus:opacity-80 dark:text-white"
            href="#" aria-label="Brand">Brand</a>
 
+
         <!-- Collapse Button -->
         <div class="md:hidden">
+          <ButtonColorMode class="mr-2"/>
+
           <UButton
               icon="i-material-symbols:menu-rounded"
               color="gray"

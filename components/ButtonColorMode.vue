@@ -18,5 +18,4 @@ const isDark = computed({
         aria-label="Theme"
         @click="isDark = !isDark"
     />
-
 </template>
