@@ -1,23 +1,24 @@
 <script setup lang="ts">
 const route = useRoute()
+const base = `/project/${route.params.id}`
 
 const links = [
   [{
     label: 'Dashboard',
     icon: 'i-material-symbols:house-rounded',
-    to: '/dashboard'
+    to: `${base}/dashboard`
   }, {
     label: 'Dataset',
     icon: 'i-material-symbols:database-outline',
-    to: '/dataset'
+    to: `${base}/dataset`
   }, {
     label: 'Annotation',
     icon: 'i-material-symbols:format-ink-highlighter-outline',
-    to: '/annotation'
+    to: `${base}/annotation`
   }], [{
     label: 'Converter',
     icon: 'i-material-symbols:conversion-path',
-    to: '/converter'
+    to: `${base}/converter`
   }]
 ]
 </script>
