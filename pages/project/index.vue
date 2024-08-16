@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 definePageMeta({
   layout: 'guest',
 })
@@ -45,8 +46,11 @@ const projects = [{
     <h2 class="font-semibold text-xl text-gray-900 dark:text-white leading-tight">
       My Projects
     </h2>
+
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6 ">
-      <UCard v-for="project in projects" :key="project.id">
+
+      <UCard v-for="project in projects"
+             :key="project.id">
         <template #header>
           <div class="flex w-full">
             <UAvatar
@@ -63,12 +67,12 @@ const projects = [{
           </div>
 
         </template>
-
-
+        <NuxtLink :to="{ name: 'project', params: { id: project.id } }">View</NuxtLink>
         <template #footer>
           <p class="text-sm text-right">{{ project.created_at }}</p>
         </template>
       </UCard>
+
     </div>
 
   </UContainer>
