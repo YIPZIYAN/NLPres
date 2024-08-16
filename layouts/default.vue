@@ -4,7 +4,7 @@ const route = useRoute()
 const links = [
   [{
     label: 'Dashboard',
-    icon: 'i-heroicons-home',
+    icon: 'i-material-symbols:house-rounded',
     to: '/dashboard'
   }, {
     label: 'Dataset',
@@ -16,7 +16,7 @@ const links = [
     to: '/annotation'
   }], [{
     label: 'Converter',
-    icon: 'i-heroicons-home',
+    icon: 'i-material-symbols:conversion-path',
     to: '/converter'
   }]
 ]
@@ -49,7 +49,7 @@ const links = [
       </div>
 
       <div class="w-full flex items-center ms-auto gap-x-1 md:gap-x-3">
-        <UBreadcrumb class="invisible lg:visible w-full" :links="links"/>
+        <p class="invisible lg:visible w-full text-2xl">{{route.name?.toString().toUpperCase()}}</p>
         <div class="flex flex-row items-center justify-end gap-1">
           <button type="button"
                   class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
@@ -164,7 +164,7 @@ const links = [
         <!-- End Navigation Toggle -->
 
         <!-- Breadcrumb -->
-        <UBreadcrumb class="ms-3" :links="links"/>
+        <p>{{route.name}}</p>
         <!-- End Breadcrumb -->
       </div>
     </div>
