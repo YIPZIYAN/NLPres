@@ -6,4 +6,5 @@ definePageMeta({
 <template>
   HomePage
   <UButton>Submit</UButton>
+  <PButton label="Test"></PButton>
 </template>
