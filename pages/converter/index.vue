@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  <Select/>
 <FileUpload/>
   <UButton
       size="md"

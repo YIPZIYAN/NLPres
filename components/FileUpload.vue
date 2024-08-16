@@ -11,6 +11,13 @@ const onAdvancedUpload = () => {
 </script>
 
 <template>
+  <USelect
+      size="xl"
+      placeholder="File Format"
+      color="blue"
+      variant="outline"
+      :options="['TXT', 'JSON', 'JSONL', 'CONLL-U', 'XML', 'CSV']"
+  />
   <div class="card">
     <Toast />
     <PFileUpload name="demo[]" url="/api/upload" @upload="onAdvancedUpload($event)" :multiple="true" accept="image/*" :maxFileSize="1000000">
