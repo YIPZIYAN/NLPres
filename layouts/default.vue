@@ -1,19 +1,25 @@
 <script setup lang="ts">
 const route = useRoute()
 
-const links = [{
-  label: 'Dashboard',
-  icon: 'i-heroicons-home',
-  to: '/dashboard'
-}, {
-  label: 'Dataset',
-  icon: 'i-material-symbols:database-outline',
-  to: '/dataset'
-}, {
-  label: 'Annotation',
-  icon: 'i-material-symbols:format-ink-highlighter-outline',
-  to: '/annotation'
-}]
+const links = [
+  [{
+    label: 'Dashboard',
+    icon: 'i-heroicons-home',
+    to: '/dashboard'
+  }, {
+    label: 'Dataset',
+    icon: 'i-material-symbols:database-outline',
+    to: '/dataset'
+  }, {
+    label: 'Annotation',
+    icon: 'i-material-symbols:format-ink-highlighter-outline',
+    to: '/annotation'
+  }], [{
+    label: 'Converter',
+    icon: 'i-heroicons-home',
+    to: '/converter'
+  }]
+]
 </script>
 
 <template>
@@ -43,7 +49,7 @@ const links = [{
       </div>
 
       <div class="w-full flex items-center ms-auto gap-x-1 md:gap-x-3">
-        <UBreadcrumb class="invisible lg:visible w-full" :links="links" />
+        <UBreadcrumb class="invisible lg:visible w-full" :links="links"/>
         <div class="flex flex-row items-center justify-end gap-1">
           <button type="button"
                   class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
@@ -158,7 +164,7 @@ const links = [{
         <!-- End Navigation Toggle -->
 
         <!-- Breadcrumb -->
-        <UBreadcrumb class="ms-3" :links="links" />
+        <UBreadcrumb class="ms-3" :links="links"/>
         <!-- End Breadcrumb -->
       </div>
     </div>
@@ -212,7 +218,7 @@ const links = [{
   <!-- Content -->
   <div class="w-full lg:ps-64">
     <div class="p-4 sm:p-6 space-y-4 sm:space-y-6">
-      <slot></slot>
+      <slot/>
     </div>
   </div>
   <!-- End Content -->
