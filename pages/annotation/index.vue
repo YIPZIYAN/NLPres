@@ -4,7 +4,7 @@ const items = [
   [{
     label: 'Import Dataset',
     icon: 'material-symbols:upload-2-rounded',
-    to: '/converter'
+    to: '/dataset'
   }, {
     label: 'Export Dataset',
     icon: 'material-symbols:download-2-rounded'

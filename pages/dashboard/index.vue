@@ -79,7 +79,7 @@ const pageCount = 5
 </script>
 
 <template>
-  <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
+  <div class="flex px-3 pb-3.5 border-b border-gray-200 dark:border-gray-700">
     <UInput v-model="query" placeholder="Filter people..."/>
   </div>
   <UTable :columns="columns" :rows="filteredRows">
