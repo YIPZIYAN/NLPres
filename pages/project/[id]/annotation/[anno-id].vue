@@ -97,8 +97,8 @@ const people = [{
       </UButtonGroup>
     </template>
 
-    <div class="grid grid-cols-3">
-      <div class="col-span-3 md:col-span-2">
+    <div class="grid grid-cols-4 lg:grid-cols-3">
+      <div class="col-span-4 sm:col-span-2 lg:col-span-2">
         <div class="mb-4 flex flex-wrap space-x-2 w-full">
           <UButton
               v-for="label in labels"
@@ -113,7 +113,7 @@ const people = [{
 
       </div>
 
-      <div class="col-span-3 md:col-span-1 mt-8 sm:mt-0">
+      <div class="col-span-4 sm:col-span-2 lg:col-span-1 mt-8 sm:mt-0">
         <UCard>
           <template #header>
             <h2 class="font-semibold text-center text-xl text-gray-900 dark:text-white leading-tight">
