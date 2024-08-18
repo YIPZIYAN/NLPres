@@ -3,7 +3,8 @@
 </script>
 
 <template>
-  <FileUpload/>
+<FileUpload/>
+
 </template>
 
 <style scoped>
