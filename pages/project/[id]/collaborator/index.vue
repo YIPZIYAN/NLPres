@@ -3,7 +3,7 @@
 </script>
 
 <template>
-annotation
+
 </template>
 
 <style scoped>

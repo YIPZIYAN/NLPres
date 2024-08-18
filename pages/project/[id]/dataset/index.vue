@@ -3,7 +3,7 @@
 </script>
 
 <template>
-dataset
+  <FileUpload/>
 </template>
 
 <style scoped>
