@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxt/ui": "^2.18.4",
     "@primevue/themes": "^4.0.4",
+    "chart.js": "^4.4.3",
     "nuxt": "^3.12.4",
     "preline": "^2.4.1",
     "primevue": "^4.0.4",

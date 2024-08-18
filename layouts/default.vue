@@ -13,12 +13,28 @@ const links = [
     to: `${base}/dataset`
   }, {
     label: 'Annotation',
-    icon: 'i-material-symbols:format-ink-highlighter-outline',
+    icon: 'i-material-symbols:format-color-text-rounded',
     to: `${base}/annotation`
+  }, {
+    label: 'Label',
+    icon: 'i-material-symbols:format-ink-highlighter-outline',
+    to: `${base}/label`
   }], [{
     label: 'Converter',
     icon: 'i-material-symbols:conversion-path',
     to: `${base}/converter`
+  }, {
+    label: 'Collaborator',
+    icon: 'i-material-symbols:supervisor-account',
+    to: `${base}/collaborator`
+  }, {
+    label: 'Statistic',
+    icon: 'i-material-symbols:analytics',
+    to: `${base}/statistic`
+  }, {
+    label: 'Setting',
+    icon: 'i-material-symbols:settings',
+    to: `${base}/setting`
   }]
 ]
 </script>
@@ -50,7 +66,7 @@ const links = [
       </div>
 
       <div class="w-full flex items-center ms-auto gap-x-1 md:gap-x-3">
-        <p class="invisible lg:visible w-full text-2xl">{{route.name?.toString().toUpperCase()}}</p>
+        <p class="invisible lg:visible w-full text-2xl">{{ route.name?.toString().toUpperCase() }}</p>
         <div class="flex flex-row items-center justify-end gap-1">
           <button type="button"
                   class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
@@ -165,7 +181,7 @@ const links = [
         <!-- End Navigation Toggle -->
 
         <!-- Breadcrumb -->
-        <p>{{route.name}}</p>
+        <p>{{ route.name }}</p>
         <!-- End Breadcrumb -->
       </div>
     </div>
