@@ -206,7 +206,8 @@ const {data: todos, pending} = await useLazyAsyncData<{
       <template #actions-data="{ row }">
 
         <UButton size="xs" color="blue" variant="solid" class="mr-4">Edit</UButton>
-        <UButton size="xs" color="blue" variant="solid">Annotate</UButton>
+        <UButton size="xs" color="blue" variant="solid"
+                 :to="`annotation/${row.id}`">Annotate</UButton>
 
       </template>
     </UTable>
