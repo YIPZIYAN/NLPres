@@ -100,7 +100,7 @@ watch(selectedFormat, () => {
             </UButton>
           </div>
           <div class="flex justify-end flex-1">
-            <NuxtLink :to="`/annotation`">
+            <NuxtLink :to="`/project/${useRoute().params.id}/annotation`">
               <UButton
                 :disabled="!uploadedFiles || uploadedFiles.length === 0"
                 color="blue"
