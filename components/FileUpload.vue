@@ -43,6 +43,7 @@ watch(selectedFormat, () => {
 </script>
 
 <template>
+  <UFormGroup label="Select File Format">
   <USelectMenu
     size="xl"
     placeholder="File Format"
@@ -51,6 +52,7 @@ watch(selectedFormat, () => {
     :options="formatSelections"
     v-model="selectedFormat"
   />
+  </UFormGroup>
   <Toast />
   <div class="card" v-if="selectedFormat">
     <PFileUpload
