@@ -48,7 +48,7 @@ const projects = [{
     </h2>
 
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6 ">
-      <NuxtLink :to="`/project/${project.id}/dashboard`" v-for="project in projects"
+      <NuxtLink :to="{ name: 'project-id-dashboard', params: { id: project.id }}" v-for="project in projects"
                 :key="project.id">
         <UCard>
           <template #header>
