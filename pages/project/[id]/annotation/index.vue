@@ -7,7 +7,8 @@ const items = [
     to: '/dataset'
   }, {
     label: 'Export Dataset',
-    icon: 'material-symbols:download-2-rounded'
+    icon: 'material-symbols:download-2-rounded',
+    to: '/dataset/export'
   }]
 ]
 
