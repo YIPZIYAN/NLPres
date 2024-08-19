@@ -68,6 +68,7 @@ const links = [
       <div class="w-full flex items-center ms-auto gap-x-1 md:gap-x-3">
         <p class="invisible lg:visible w-full text-2xl">{{ route.name?.toString().toUpperCase() }}</p>
         <div class="flex flex-row items-center justify-end gap-1">
+          <ButtonColorMode/>
           <button type="button"
                   class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">
             <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
