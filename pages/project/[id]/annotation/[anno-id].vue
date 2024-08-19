@@ -15,16 +15,19 @@ const labels = [{
 
 const list = [{
   'id': 1,
-  'text': "BAd Services.",
-  'status': false
+  'text': "soooooo wish i could, but im in school and myspace is completely blocked",
+  'status': false,
+  'label': null,
 }, {
   'id': 2,
-  'text': "this is text 2",
-  'status': true
+  'text': "My bike was put on hold...should have known that.... argh total bummer",
+  'status': true,
+  'label': 2,
 }, {
   'id': 3,
-  'text': "this is text 3",
-  'status': true
+  'text': "Stupid storm. No river for us tonight",
+  'status': true,
+  'label': 2,
 }];
 
 function getCurrent() {
@@ -74,6 +77,10 @@ const people = [{
   pending: list.filter(value => !value.status).length,
   total: list.length
 }];
+
+function isSelected(id) {
+  return id === data.label;
+}
 </script>
 
 <template>
@@ -82,7 +89,7 @@ const people = [{
       <UButtonGroup size="lg" orientation="horizontal">
 
         <UTooltip text="Mark As" :popper="{ placement: 'top' }">
-          <UButton v-if="data?.status" @click="markAs(true)" icon="i-material-symbols:download-done-rounded"
+          <UButton v-if="data?.status" @click="markAs(true)" icon="i-material-symbols:check"
                    color="gray"/>
           <UButton v-else @click="markAs(false)" icon="i-material-symbols:close-rounded" color="gray"/>
         </UTooltip>
@@ -104,12 +111,14 @@ const people = [{
               v-for="label in labels"
               :key="label.id"
               class="px-4"
-              :color=label.color
+              :color="label.color"
+              :leading-icon="isSelected(label.id) ?  'i-material-symbols:check' : ''"
               :ui="{ rounded: 'rounded-full' }">{{ label.name }}
           </UButton>
         </div>
 
-        {{ getCurrent().text }}
+        <p class="w-full pr-4 text-justify"> {{ getCurrent().text }}</p>
+
 
       </div>
 
