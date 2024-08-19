@@ -1,7 +1,34 @@
 <script setup lang="ts">
-
 const route = useRoute();
 let id = parseInt(route.params.annoid.toString());
+
+const projects = [{
+  id: 1,
+  label: 'Code Mixed Twitter',
+  description: '202401 ISpark Project',
+  type:0,
+  created_at: "2024-01-03",
+}, {
+  id: 2,
+  label: 'Facebook Sentiment Analysis',
+  description: '202401 ISpark Project',
+  type:1,
+  created_at: "2024-01-03",
+}, {
+  id: 3,
+  label: 'NLP Assignment',
+  description: '202401 ISpark Project',
+  type:0,
+  created_at: "2024-01-03",
+}, {
+  id: 4,
+  label: 'NER Assignment',
+  description: '202401 ISpark Project',
+  type:0,
+  created_at: "2024-01-03",
+}]
+const projectDetails = projects.find((project) => project.id.toString() == route.params.id)
+
 
 const labels = [{
   'id': 1,
@@ -83,7 +110,7 @@ function isSelected(id) {
 }
 </script>
 
-<template>
+<template ref="layout">
   <UCard>
     <template #header>
       <UButtonGroup size="lg" orientation="horizontal">
@@ -108,6 +135,7 @@ function isSelected(id) {
       <div class="col-span-4 sm:col-span-2 lg:col-span-2">
         <div class="mb-4 flex flex-wrap space-x-2 w-full">
           <UButton
+              v-if="projectDetails.type == 1"
               v-for="label in labels"
               :key="label.id"
               class="px-4"

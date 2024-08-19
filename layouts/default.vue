@@ -63,8 +63,9 @@ const projects = [{
   type:0,
   created_at: "2024-01-03",
 }]
-
 const projectDetails = projects.find((project) => project.id.toString() == route.params.id)
+
+
 </script>
 
 <template>
