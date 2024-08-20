@@ -19,6 +19,8 @@ function getSelected() {
   const selection = window.getSelection();
   console.log(selection.toString());
 
+  dropdownVisible.value = false
+
   if (selection && selection.rangeCount > 0) {
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
@@ -35,14 +37,16 @@ const selected = ref()
 
 const dropdownVisible = ref(false);
 const dropdownStyle = ref<Record<string, string>>({});
+
 </script>
 
 <template>
-  <p v-on:mouseup="getSelected()" v-on:mousedown="dropdownVisible.value = false">
+  <p v-on:mouseup="getSelected()">
     {{ rawtext }}
     <!--    <p class="inline-block px-2" v-for="text in textBlock">{{ text }}</p>-->
   </p>
   <PListbox
+      @change="dropdownVisible = false"
       v-if="dropdownVisible" class="z-50" :style="dropdownStyle"
       v-model="selected" :options="labels" filter optionLabel="name"/>
 
