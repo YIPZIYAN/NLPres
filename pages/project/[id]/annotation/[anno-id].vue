@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type {Label} from "~/server/api/label";
+
 const route = useRoute();
 let id = parseInt(route.params.annoid.toString());
 
@@ -6,31 +8,31 @@ const projects = [{
   id: 1,
   label: 'Code Mixed Twitter',
   description: '202401 ISpark Project',
-  type:0,
+  type: 0,
   created_at: "2024-01-03",
 }, {
   id: 2,
   label: 'Facebook Sentiment Analysis',
   description: '202401 ISpark Project',
-  type:1,
+  type: 1,
   created_at: "2024-01-03",
 }, {
   id: 3,
   label: 'NLP Assignment',
   description: '202401 ISpark Project',
-  type:0,
+  type: 0,
   created_at: "2024-01-03",
 }, {
   id: 4,
   label: 'NER Assignment',
   description: '202401 ISpark Project',
-  type:0,
+  type: 0,
   created_at: "2024-01-03",
 }]
 const projectDetails = projects.find((project) => project.id.toString() == route.params.id)
 
 
-const labels = [{
+const labels: Array<Label> = [{
   'id': 1,
   'name': "Positive",
   'color': "blue",
@@ -105,9 +107,9 @@ const people = [{
   total: list.length
 }];
 
-function isSelected(id) {
-  return id === data.label;
-}
+
+
+
 </script>
 
 <template ref="layout">
@@ -133,21 +135,9 @@ function isSelected(id) {
 
     <div class="grid grid-cols-4 lg:grid-cols-3">
       <div class="col-span-4 sm:col-span-2 lg:col-span-2">
-        <div class="mb-4 flex flex-wrap space-x-2 w-full">
-          <UButton
-              v-if="projectDetails.type == 1"
-              v-for="label in labels"
-              :key="label.id"
-              class="px-4"
-              :color="label.color"
-              :leading-icon="isSelected(label.id) ?  'i-material-symbols:check' : ''"
-              :ui="{ rounded: 'rounded-full' }">{{ label.name }}
-          </UButton>
-        </div>
-
+        <TextClassification v-if="projectDetails.type == 1" :labels="labels"
+                            :data="data.label"/>
         <p class="w-full pr-4 text-justify"> {{ getCurrent().text }}</p>
-
-
       </div>
 
       <div class="col-span-4 sm:col-span-2 lg:col-span-1 mt-8 sm:mt-0">
