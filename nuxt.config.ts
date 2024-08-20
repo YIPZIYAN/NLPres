@@ -35,6 +35,9 @@ export default defineNuxtConfig({
         autoImport: false,
         options: {
             theme: {
+                options: {
+                    darkModeSelector: '.dark',
+                },
                 preset: definePreset(Aura, {
                     semantic: {
                         primary: {

@@ -44,7 +44,7 @@ const labels: Array<Label> = [{
 
 const list = [{
   'id': 1,
-  'text': "soooooo wish i could, but im in school and myspace is completely blocked",
+  'text': "soooooo wish i could, but im in school and myspace is completely blocked. testing testing 1 123 222211 11111",
   'status': false,
   'label': null,
 }, {
@@ -107,12 +107,9 @@ const people = [{
   total: list.length
 }];
 
-
-
-
 </script>
 
-<template ref="layout">
+<template>
   <UCard>
     <template #header>
       <UButtonGroup size="lg" orientation="horizontal">
@@ -136,8 +133,10 @@ const people = [{
     <div class="grid grid-cols-4 lg:grid-cols-3">
       <div class="col-span-4 sm:col-span-2 lg:col-span-2">
         <TextClassification v-if="projectDetails.type == 1" :labels="labels"
-                            :data="data.label"/>
-        <p class="w-full pr-4 text-justify"> {{ getCurrent().text }}</p>
+                            :data="data.label">
+          <p class="w-full pr-4 text-justify"> {{ getCurrent().text }}</p>
+        </TextClassification>
+        <TextAnnotation v-else :rawtext="data.text" :labels="labels"/>
       </div>
 
       <div class="col-span-4 sm:col-span-2 lg:col-span-1 mt-8 sm:mt-0">

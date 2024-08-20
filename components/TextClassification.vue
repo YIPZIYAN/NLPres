@@ -2,11 +2,12 @@
 
 import type {Label} from "~/server/api/label";
 
-const props=defineProps({
+const props = defineProps({
   labels: Array<Label>,
   data: Number,
 })
 
+//should pass whole data, change to interface class when implement server side
 function isSelected(id: number) {
   return id === props.data;
 }
@@ -23,5 +24,6 @@ function isSelected(id: number) {
         :ui="{ rounded: 'rounded-full' }">{{ label.name }}
     </UButton>
   </div>
+  <slot/>
 
 </template>
