@@ -1,9 +1,38 @@
 <script setup lang="ts">
+import type {Label} from "~/server/api/label";
 
 const route = useRoute();
 let id = parseInt(route.params.annoid.toString());
 
-const labels = [{
+const projects = [{
+  id: 1,
+  label: 'Code Mixed Twitter',
+  description: '202401 ISpark Project',
+  type: 0,
+  created_at: "2024-01-03",
+}, {
+  id: 2,
+  label: 'Facebook Sentiment Analysis',
+  description: '202401 ISpark Project',
+  type: 1,
+  created_at: "2024-01-03",
+}, {
+  id: 3,
+  label: 'NLP Assignment',
+  description: '202401 ISpark Project',
+  type: 0,
+  created_at: "2024-01-03",
+}, {
+  id: 4,
+  label: 'NER Assignment',
+  description: '202401 ISpark Project',
+  type: 0,
+  created_at: "2024-01-03",
+}]
+const projectDetails = projects.find((project) => project.id.toString() == route.params.id)
+
+
+const labels: Array<Label> = [{
   'id': 1,
   'name': "Positive",
   'color': "blue",
@@ -15,16 +44,19 @@ const labels = [{
 
 const list = [{
   'id': 1,
-  'text': "BAd Services.",
-  'status': false
+  'text': "soooooo wish i could, but im in school and myspace is completely blocked. testing testing 1 123 222211 11111",
+  'status': false,
+  'label': null,
 }, {
   'id': 2,
-  'text': "this is text 2",
-  'status': true
+  'text': "My bike was put on hold...should have known that.... argh total bummer",
+  'status': true,
+  'label': 2,
 }, {
   'id': 3,
-  'text': "this is text 3",
-  'status': true
+  'text': "Stupid storm. No river for us tonight",
+  'status': true,
+  'label': 2,
 }];
 
 function getCurrent() {
@@ -74,6 +106,7 @@ const people = [{
   pending: list.filter(value => !value.status).length,
   total: list.length
 }];
+
 </script>
 
 <template>
@@ -82,7 +115,7 @@ const people = [{
       <UButtonGroup size="lg" orientation="horizontal">
 
         <UTooltip text="Mark As" :popper="{ placement: 'top' }">
-          <UButton v-if="data?.status" @click="markAs(true)" icon="i-material-symbols:download-done-rounded"
+          <UButton v-if="data?.status" @click="markAs(true)" icon="i-material-symbols:check"
                    color="gray"/>
           <UButton v-else @click="markAs(false)" icon="i-material-symbols:close-rounded" color="gray"/>
         </UTooltip>
@@ -99,18 +132,11 @@ const people = [{
 
     <div class="grid grid-cols-4 lg:grid-cols-3">
       <div class="col-span-4 sm:col-span-2 lg:col-span-2">
-        <div class="mb-4 flex flex-wrap space-x-2 w-full">
-          <UButton
-              v-for="label in labels"
-              :key="label.id"
-              class="px-4"
-              :color=label.color
-              :ui="{ rounded: 'rounded-full' }">{{ label.name }}
-          </UButton>
-        </div>
-
-        {{ getCurrent().text }}
-
+        <TextClassification v-if="projectDetails.type == 1" :labels="labels"
+                            :data="data.label">
+          <p class="w-full pr-4 text-justify"> {{ getCurrent().text }}</p>
+        </TextClassification>
+        <TextAnnotation v-else :rawtext="data.text" :labels="labels"/>
       </div>
 
       <div class="col-span-4 sm:col-span-2 lg:col-span-1 mt-8 sm:mt-0">
