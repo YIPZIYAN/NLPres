@@ -51,10 +51,11 @@ watch(selectedFormat, () => {
     variant="outline"
     :options="formatSelections"
     v-model="selectedFormat"
+    class="mt-2"
   />
   </UFormGroup>
   <Toast />
-  <div class="card" v-if="selectedFormat">
+  <div class="card mt-6" v-if="selectedFormat">
     <PFileUpload
       :key="fileUploadKey"
       :pt="{
