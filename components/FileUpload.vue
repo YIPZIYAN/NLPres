@@ -9,31 +9,23 @@ const onAdvancedUpload = () => {
   toast.add({severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000});
 };
 
-const formatSelections = [{
-  key: '.txt',
-  label: 'TXT',
-  value: 'https://cdn-icons-png.freepik.com/512/11580/11580874.png?ga=GA1.1.1429049260.1723829582'
-}, {
-  key: '.json',
-  label: 'JSON',
-  value: 'https://cdn-icons-png.freepik.com/512/11580/11580838.png?ga=GA1.1.1429049260.1723829582'
-}, {
-  key: '.jsonl',
-  label: 'JSONL',
-  value: 'https://cdn-icons-png.freepik.com/512/11580/11580838.png?ga=GA1.1.1429049260.1723829582'
-}, {
-  key: '.csv',
-  label: 'CSV',
-  value: 'https://cdn-icons-png.freepik.com/512/11580/11580842.png?ga=GA1.1.1429049260.1723829582'
-}, {
-  key: '.xml',
-  label: 'XML',
-  value: 'https://cdn-icons-png.freepik.com/512/11580/11580864.png?ga=GA1.1.1429049260.1723829582'
-}, {
-  key: '.conllu',
-  label: 'CONLL-U',
-  value: 'https://cdn-icons-png.freepik.com/512/16961/16961685.png?ga=GA1.1.1429049260.1723829582'
-}]
+defineProps({
+  importable: {
+    type: Boolean,
+    default: false
+  },
+  fileFormats: {
+    type: Array,
+    required: true
+  },
+  multiple:{
+    type: Boolean,
+    default: false
+  },
+  fileLimit: {
+    type: Number
+  }
+})
 
 const selectedFormat = ref('')
 const fileUploadKey = ref(0);
@@ -49,7 +41,7 @@ watch(selectedFormat, () => {
     placeholder="File Format"
     color="blue"
     variant="outline"
-    :options="formatSelections"
+    :options="fileFormats"
     v-model="selectedFormat"
     class="mt-2"
   />
@@ -64,7 +56,8 @@ watch(selectedFormat, () => {
       name="demo[]"
       url="/api/upload"
       @upload="onAdvancedUpload()"
-      :multiple="true"
+      :fileLimit="fileLimit"
+      :multiple="multiple"
       :accept="selectedFormat.valueOf().key"
       :maxFileSize="1000000"
     >
@@ -102,7 +95,7 @@ watch(selectedFormat, () => {
               >Cancel
             </UButton>
           </div>
-          <div class="flex justify-end flex-1">
+          <div class="flex justify-end flex-1" v-if="importable">
             <NuxtLink :to="`/project/${useRoute().params.id}/annotation`">
               <UButton
                 :disabled="!uploadedFiles || uploadedFiles.length === 0"
