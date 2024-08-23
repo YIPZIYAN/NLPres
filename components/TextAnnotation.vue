@@ -8,6 +8,15 @@ const props = defineProps({
   labels: Array<Label>
 })
 
+const labelseq: Array<Label> = [{
+  'id': 1,
+  'name': "Verb",
+  'color': "blue",
+}, {
+  'id': 2,
+  'name': "Nouns",
+  'color': "red",
+}]
 
 
 function getSelected() {
@@ -38,11 +47,10 @@ const dropdownStyle = ref<Record<string, string>>({});
 <template>
   <p v-on:mouseup="getSelected()">
     <TextLabel :text="rawtext" />
-    <!--    <p class="inline-block px-2" v-for="text in textBlock">{{ text }}</p>-->
   </p>
   <PListbox
       @change="dropdownVisible = false"
       v-if="dropdownVisible" class="z-50" :style="dropdownStyle"
-      v-model="selected" :options="labels" filter optionLabel="name"/>
+      v-model="selected" :options="labelseq" filter optionLabel="name"/>
 
 </template>
