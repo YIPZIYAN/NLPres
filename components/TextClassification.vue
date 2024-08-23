@@ -15,14 +15,19 @@ function isSelected(id: number) {
 
 <template>
   <div class="mb-4 flex flex-wrap space-x-2 w-full">
-    <UButton
+    <UTooltip
         v-for="label in labels"
-        :key="label.id"
-        class="px-4"
-        :color="label.color"
-        :leading-icon="isSelected(label.id)?  'i-material-symbols:check' : ''"
-        :ui="{ rounded: 'rounded-full' }">{{ label.name }}
-    </UButton>
+        :text="label.name"
+        :shortcuts="['1']"
+        :popper="{ placement: 'top' }">
+      <UButton
+          :key="label.id"
+          class="px-4"
+          :color="label.color"
+          :leading-icon="isSelected(label.id)?  'i-material-symbols:check' : ''"
+          :ui="{ rounded: 'rounded-full' }">{{ label.name }}
+      </UButton>
+    </UTooltip>
   </div>
   <slot/>
 
