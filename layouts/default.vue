@@ -213,7 +213,7 @@ const projectDetails = projects.find((project) => project.id.toString() == route
         <!-- End Navigation Toggle -->
 
         <!-- Breadcrumb -->
-        <p>{{ route.name }}</p>
+        <p>{{ projectDetails.label }}</p>
         <!-- End Breadcrumb -->
       </div>
     </div>

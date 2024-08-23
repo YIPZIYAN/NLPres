@@ -44,7 +44,7 @@ const labels: Array<Label> = [{
 
 const list = [{
   'id': 1,
-  'text': "soooooo wish i could, but im in school and myspace is completely blocked. testing testing 1 123 222211 11111",
+  'text': "soooooo wish i could, but im in school and myspace is completely blocked.",
   'status': false,
   'label': null,
 }, {
