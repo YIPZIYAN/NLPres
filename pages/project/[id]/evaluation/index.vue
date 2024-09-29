@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {Avatar} from "#ui/types";
 
-const iaaMetrics = ['Cohen Kappa']
+const iaaMetrics = ['Cohen Kappa','Fleiss\' kappa']
 
 
 const users = ['YIP ZI YAN', 'GOH CHUN YEN']
@@ -52,7 +52,7 @@ const selectedUsers = ref([])
     />
   </div>
   <div>
-    <h1 class="m-2">Result: 0.88</h1>
+    <h1 class="my-4">Result: 0.88 <UBadge class="ml-2" label="Almost Perfect Agreement" color="green" /> </h1>
     <div>
       <UCard v-for="user in profiles" :key="user.id">
         <template #header>
