@@ -23,7 +23,7 @@ import {definePreset} from "@primeuix/styled";
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: {enabled: true},
-    modules: ["@nuxt/ui", "@primevue/nuxt-module"],
+    modules: ["@nuxt/ui", "@primevue/nuxt-module", 'shadcn-nuxt','@vueuse/motion/nuxt'],
     css: ['~/assets/css/main.css'],
     postcss: {
         plugins: {
@@ -60,6 +60,17 @@ export default defineNuxtConfig({
         components: {
             prefix: 'p'
         },
+    },
+    shadcn: {
+        /**
+         * Prefix for all the imported component
+         */
+        prefix: 's',
+        /**
+         * Directory that the component lives in.
+         * @default "./components/ui"
+         */
+        componentDir: './components/ui'
     },
     plugins: ["~/plugins/preline.client.ts"],
 })
