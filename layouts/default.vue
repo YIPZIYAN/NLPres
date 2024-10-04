@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const route =  useRouter().currentRoute.value
+const route = useRouter().currentRoute.value
 const base = `/project/${route.params.id}`
 const links = [
   [{
@@ -27,6 +27,10 @@ const links = [
     icon: 'i-material-symbols:supervisor-account',
     to: `${base}/collaborator`
   }, {
+    label: 'Evaluation',
+    icon: 'i-material-symbols:custom-typography',
+    to: `${base}/evaluation`
+  }, {
     label: 'Statistic',
     icon: 'i-material-symbols:analytics',
     to: `${base}/statistic`
@@ -42,25 +46,25 @@ const projects = [{
   id: 1,
   label: 'Code Mixed Twitter',
   description: '202401 ISpark Project',
-  type:0,
+  type: 0,
   created_at: "2024-01-03",
 }, {
   id: 2,
   label: 'Facebook Sentiment Analysis',
   description: '202401 ISpark Project',
-  type:1,
+  type: 1,
   created_at: "2024-01-03",
 }, {
   id: 3,
   label: 'NLP Assignment',
   description: '202401 ISpark Project',
-  type:0,
+  type: 0,
   created_at: "2024-01-03",
 }, {
   id: 4,
   label: 'NER Assignment',
   description: '202401 ISpark Project',
-  type:0,
+  type: 0,
   created_at: "2024-01-03",
 }]
 const projectDetails = projects.find((project) => project.id.toString() == route.params.id)
@@ -213,7 +217,7 @@ const projectDetails = projects.find((project) => project.id.toString() == route
         <!-- End Navigation Toggle -->
 
         <!-- Breadcrumb -->
-        <p>{{ route.name }}</p>
+        <p>{{ projectDetails.label }}</p>
         <!-- End Breadcrumb -->
       </div>
     </div>
@@ -233,9 +237,10 @@ const projectDetails = projects.find((project) => project.id.toString() == route
     <div class="relative flex flex-col h-full max-h-full">
       <div class="px-6 pt-4">
         <!-- Logo -->
-        <NuxtLink :to="{name:'index'}" class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
-           aria-label="Preline">
-NLPre
+        <NuxtLink :to="{name:'index'}"
+                  class="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+                  aria-label="Preline">
+          NLPre
         </NuxtLink>
         <!-- End Logo -->
       </div>
