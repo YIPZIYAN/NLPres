@@ -23,7 +23,13 @@ import {definePreset} from "@primeuix/styled";
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: {enabled: true},
-    modules: ["@nuxt/ui", "@primevue/nuxt-module", 'shadcn-nuxt','@vueuse/motion/nuxt'],
+    modules: [
+      "@nuxt/ui",
+      "@primevue/nuxt-module",
+      'shadcn-nuxt',
+      '@vueuse/motion/nuxt',
+      '@sidebase/nuxt-auth',
+    ],
     css: ['~/assets/css/main.css'],
     postcss: {
         plugins: {
