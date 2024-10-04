@@ -35,6 +35,10 @@ const links = [
     icon: 'i-material-symbols:analytics',
     to: `${base}/statistic`
   }, {
+    label: 'Comparison',
+    icon: 'material-symbols:compare',
+    to: `${base}/comparison`
+  }, {
     label: 'Setting',
     icon: 'i-material-symbols:settings',
     to: `${base}/setting`

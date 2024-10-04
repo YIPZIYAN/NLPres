@@ -30,14 +30,17 @@ const selectedFormat = ref('')
 
 <template>
   <div class="space-y-6">
-    <USelectMenu
-        size="xl"
-        placeholder="File Format"
-        color="blue"
-        variant="outline"
-        :options="formatSelections"
-        v-model="selectedFormat"
-    />
+    <UFormGroup label="Select File Format">
+      <USelectMenu
+          size="xl"
+          placeholder="File Format"
+          color="blue"
+          variant="outline"
+          :options="formatSelections"
+          v-model="selectedFormat"
+          class="mt-2"
+      />
+    </UFormGroup>
 
     <UCheckbox color="blue" label="Export only approved datasets" />
 
