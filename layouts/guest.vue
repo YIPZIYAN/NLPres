@@ -30,7 +30,7 @@ const mobileLinks = [...links, {
       <div class="flex flex-grow items-center justify-between ml-2">
         <img src="/nlpres_logo.png" class="w-6 m-4" alt="logo"/>
         <a class="flex-1 font-semibold text-xl text-black focus:outline-none focus:opacity-80 dark:text-white"
-           href="" aria-label="NLPres">
+           href="/" aria-label="NLPres">
           NLPres
         </a>
 
