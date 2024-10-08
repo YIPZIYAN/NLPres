@@ -62,7 +62,7 @@ const mobileLinks = [...links, {
           icon="i-material-symbols:login"
           color="gray"
           variant="solid"
-          to="/auth/login"
+          to="/login"
           label="Log In"
       />
     </nav>

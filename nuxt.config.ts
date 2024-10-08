@@ -30,6 +30,19 @@ export default defineNuxtConfig({
       '@vueuse/motion/nuxt',
       '@sidebase/nuxt-auth',
     ],
+    auth: {
+        globalAppMiddleware: true,
+        baseURL: 'http://127.0.0.1:8000/api/auth/',
+        provider: {
+            type: 'local',
+            endpoints: {
+                signIn: { path: 'login', method: 'post' },
+                signOut: { path: 'logout', method: 'post' },
+                signUp: { path: 'register', method: 'post' },
+                getSession: { path: 'session', method: 'get' },
+            }
+        },
+    },
     css: ['~/assets/css/main.css'],
     postcss: {
         plugins: {

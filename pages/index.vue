@@ -2,7 +2,8 @@
 import RadiantText from "~/components/ui/RadiantText.vue";
 
 definePageMeta({
-  layout: 'guest'
+  layout: 'guest',
+  auth: false
 })
 </script>
 <template>
