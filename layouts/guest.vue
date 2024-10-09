@@ -17,10 +17,28 @@ const mobileLinks = [...links, {
   to: '/auth-login',
   icon: 'i-material-symbols:login',
 }]
+
+const {data, status, getSession, signOut} = useAuth()
+
+const dropdownItems = [
+  [{
+    label: 'Profile',
+    icon: 'i-heroicons-user-circle'
+  }, {
+    label: 'Projects',
+    icon: 'i-material-symbols:collections-bookmark-rounded',
+  }], [{
+    label: 'Logout',
+    icon: 'i-heroicons-arrow-left-start-on-rectangle',
+    click: () => {
+      console.log('logout');
+      signOut({ callbackUrl: '/' });
+    }
+  }]
+]
+
 </script>
 <template>
-
-
   <!-- ========== HEADER ========== -->
   <header
       class="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full bg-white border-b border-gray-200 dark:bg-neutral-800 dark:border-neutral-700">
@@ -57,7 +75,12 @@ const mobileLinks = [...links, {
       </div>
       <!-- End Logo w/ Collapse Button -->
       <ButtonColorMode class="hidden md:block justify-end"/>
+
+      <UDropdown v-if="status === 'authenticated'" :items="dropdownItems" :popper="{ placement: 'bottom-start' }">
+        <UButton color="white" :label="data?.username" trailing-icon="i-heroicons-chevron-down-20-solid"/>
+      </UDropdown>
       <UButton
+          v-else
           class="hidden md:flex"
           icon="i-material-symbols:login"
           color="gray"
