@@ -1,7 +1,9 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'auth',
-  auth:false,
+  auth: {
+    unauthenticatedOnly: true,
+  },
 })
 
 const showPass = ref(false);
