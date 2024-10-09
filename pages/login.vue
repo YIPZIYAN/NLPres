@@ -53,10 +53,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
          :state="formData"
          class="space-y-4 md:space-y-6"
          @submit="onSubmit" method="post">
+
     <UFormGroup label="Email" name="email">
       <UInput placeholder="Enter your email"
               v-model="formData.email" icon="i-heroicons-envelope"/>
     </UFormGroup>
+
     <UFormGroup label="Password" name="password">
       <UInput placeholder="Enter your password"
               v-model="formData.password"
@@ -74,6 +76,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         </template>
       </UInput>
     </UFormGroup>
+
     <div class="flex items-center justify-between">
       <div class="flex items-start">
         <UCheckbox name="remember" label="Remember me"/>

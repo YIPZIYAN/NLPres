@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {type InferType, object, string} from "yup";
+import type {FormSubmitEvent} from "#ui/types";
+
 definePageMeta({
   layout: 'auth',
   auth: {
@@ -6,11 +9,51 @@ definePageMeta({
   },
 })
 
+type Schema = InferType<typeof schema>
+
+const formData = reactive({
+  username: '',
+  email: '',
+  password1: '',
+  password2: '',
+})
+
+const schema = object({
+  username: string().max(255).required('Please enter your username'),
+  email: string().email('Please enter a valid email address.').required('Please enter your email address.'),
+  password1: string().required('Please enter your password.'),
+  password2: string().required('Please confirm your password.')
+      .test('passwords-match', 'Passwords must match.', function (value) {
+        return this.parent.password1 === value
+      })
+})
+
+const {signUp} = useAuth()
+
 const showPass = ref(false);
 const showPassConfirm = ref(false);
 
-const password = '';
-const password_confirmation = '';
+const error = ref();
+const success = ref();
+const loading = ref();
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  error.value = undefined;
+  success.value = false;
+  loading.value = true;
+  try {
+    await signUp(
+        {...event.data},
+        undefined,
+        {preventLoginFlow: true}).then(value => {
+      success.value = true;
+    })
+  } catch (e) {
+    error.value = e.response._data;
+  } finally {
+    loading.value = false;
+  }
+}
 
 </script>
 
@@ -18,13 +61,42 @@ const password_confirmation = '';
   <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
     Register
   </h1>
-  <form class="space-y-4 md:space-y-6" action="#">
-    <UFormGroup label="Email">
-      <UInput placeholder="Enter your email" icon="i-heroicons-envelope"/>
+
+  <UAlert v-if="error!=undefined"
+          title="Please try again."
+          color="red"
+          variant="solid">
+    <template #description>
+      <div v-for="(errorMessages, field) in error" :key="field">
+        <ul class="list-disc px-4">
+          <li v-for="(message, index) in errorMessages" :key="index">{{ message }}</li>
+        </ul>
+      </div>
+    </template>
+  </UAlert>
+
+  <UAlert v-if="success"
+          title="Thanks for signing up."
+          color="primary"
+          variant="solid"
+          description="An email verification sent. Please check your email to verify."/>
+
+  <UForm :schema="schema" :state="formData"
+         @submit="onSubmit" method="post" class="space-y-4 md:space-y-6">
+
+    <UFormGroup label="Username" name="username">
+      <UInput placeholder="Enter your username"
+              v-model="formData.username" icon="i-heroicons-user"/>
     </UFormGroup>
-    <UFormGroup label="Password" name="password">
+
+    <UFormGroup label="Email" name="email">
+      <UInput placeholder="Enter your email"
+              v-model="formData.email" icon="i-heroicons-envelope"/>
+    </UFormGroup>
+
+    <UFormGroup label="Password" name="password1">
       <UInput placeholder="Enter your password"
-              v-model="password"
+              v-model="formData.password1"
               :ui="{ icon: { trailing: { pointer: '' } } }"
               :type="showPass ? 'text' : 'password'"
               icon="i-heroicons-lock-closed">
@@ -39,9 +111,10 @@ const password_confirmation = '';
         </template>
       </UInput>
     </UFormGroup>
-    <UFormGroup label="Confirm password" name="password_confirmation">
+
+    <UFormGroup label="Confirm password" name="password2">
       <UInput placeholder="Re-enter your password"
-              v-model="password_confirmation"
+              v-model="formData.password2"
               :ui="{ icon: { trailing: { pointer: '' } } }"
               :type="showPassConfirm ? 'text' : 'password'"
               icon="i-heroicons-lock-closed">
@@ -54,11 +127,13 @@ const password_confirmation = '';
               @click="showPassConfirm = !showPassConfirm"
           />
         </template>
-      </UInput>    </UFormGroup>
+      </UInput>
+    </UFormGroup>
 
-    <UButton block type="submit">
+    <UButton block type="submit" :disabled="loading">
       Create an account
     </UButton>
+
     <p class="text-sm font-light text-gray-500 dark:text-gray-400">
       Already have an account?
       <NuxtLink
@@ -67,5 +142,5 @@ const password_confirmation = '';
         Sign in
       </NuxtLink>
     </p>
-  </form>
+  </UForm>
 </template>
