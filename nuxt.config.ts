@@ -41,6 +41,13 @@ export default defineNuxtConfig({
                 signUp: { path: 'register/', method: 'post' },
                 getSession: { path: 'user/', method: 'get' },
             },
+            session: {
+                dataType: {
+                    id: 'string | number',
+                    username: 'string',
+                    email: 'string',
+                },
+            },
             token: {
                 signInResponseTokenPointer: '/access',
             }
