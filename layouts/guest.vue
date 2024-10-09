@@ -17,9 +17,14 @@ const mobileLinks = [...links, {
   to: '/auth-login',
   icon: 'i-material-symbols:login',
 }]
+
+const { data, status, getSession } = useAuth()
 </script>
 <template>
-
+  <h1 class="text-white text-2xl md:text-4xl  mb-5">
+    Hello,
+    <span v-if="status === 'authenticated'">{{ data?.email  }}</span>
+  </h1>
 
   <!-- ========== HEADER ========== -->
   <header

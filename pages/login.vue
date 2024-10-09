@@ -2,21 +2,45 @@
 definePageMeta({
   layout: 'auth',
 })
+
+const {signIn} = useAuth()
 const showPass = ref(false);
-const password = '';
+
+const formData = reactive({
+  email: '',
+  password: '',
+})
+
+const login = async (e) => {
+  try {
+    e.preventDefault()
+    let res = await signIn(
+        {...formData},
+        {callbackUrl: "/project"}
+    )
+
+    console.log("res", res);
+
+  } catch (error) {
+    console.log("error", error);
+    console.log(formData);
+  }
+}
 </script>
 
 <template>
   <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
     Login
   </h1>
-  <form class="space-y-4 md:space-y-6" action="#">
+  <form class="space-y-4 md:space-y-6" @submit.prevent="login" method="post">
     <UFormGroup label="Email">
-      <UInput placeholder="Enter your email" icon="i-heroicons-envelope"/>
+      <UInput placeholder="Enter your email" name="email"
+              v-model="formData.email" icon="i-heroicons-envelope"/>
     </UFormGroup>
-    <UFormGroup label="Password" name="password">
+    <UFormGroup label="Password">
       <UInput placeholder="Enter your password"
-              v-model="password"
+              name="password"
+              v-model="formData.password"
               :ui="{ icon: { trailing: { pointer: '' } } }"
               :type="showPass ? 'text' : 'password'"
               icon="i-heroicons-lock-closed">
