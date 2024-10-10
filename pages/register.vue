@@ -9,6 +9,8 @@ definePageMeta({
   },
 })
 
+const route = useRouter()
+
 type Schema = InferType<typeof schema>
 
 const formData = reactive({
@@ -34,19 +36,20 @@ const showPass = ref(false);
 const showPassConfirm = ref(false);
 
 const error = ref();
-const success = ref();
 const loading = ref();
+
+const verify = useVerify();
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   error.value = undefined;
-  success.value = false;
   loading.value = true;
   try {
     await signUp(
         {...event.data},
-        undefined,
+        { callbackUrl: '/', redirect: true },
         {preventLoginFlow: true}).then(value => {
-      success.value = true;
+      route.push('/login');
+      verify.value = true;
     })
   } catch (e) {
     error.value = e.response._data;
@@ -75,11 +78,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </template>
   </UAlert>
 
-  <UAlert v-if="success"
-          title="Thanks for signing up."
-          color="primary"
-          variant="solid"
-          description="An email verification sent. Please check your email to verify."/>
+<!--  <UAlert v-if="success"-->
+<!--          title="Thanks for signing up."-->
+<!--          color="primary"-->
+<!--          variant="solid"-->
+<!--          description="An email verification sent. Please check your email to verify."/>-->
 
   <UForm :schema="schema" :state="formData"
          @submit="onSubmit" method="post" class="space-y-4 md:space-y-6">
@@ -134,7 +137,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       Create an account
     </UButton>
 
-    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+    <UDivider/>
+
+    <p class="text-sm text-center font-light text-gray-500 dark:text-gray-400">
       Already have an account?
       <NuxtLink
           to="login"

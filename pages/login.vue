@@ -27,15 +27,19 @@ const formData = reactive({
 const error = ref();
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+  error.value = undefined;
   try {
     await signIn(
         {...event.data},
         {callbackUrl: "/project"}
     )
   } catch (e) {
-    error.value = e.response;
+    error.value = e.response._data;
   }
 }
+
+const verify = useVerify();
+console.log(verify.value);
 
 </script>
 
@@ -43,11 +47,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
     Login
   </h1>
-  <UAlert v-if="error"
+  <UAlert v-if="error!=undefined"
+          title="Please try again."
           color="red"
-          variant="solid"
-          title="Opps.."
-          description="Please check your credentials and try again."/>
+          variant="solid">
+    <template #description>
+      <div v-for="(errorMessages, field) in error" :key="field">
+        <ul class="list-disc px-4">
+          <li v-for="(message, index) in errorMessages" :key="index">{{ message }}</li>
+        </ul>
+      </div>
+    </template>
+  </UAlert>
 
   <UForm :schema="schema"
          :state="formData"
@@ -77,17 +88,20 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       </UInput>
     </UFormGroup>
 
-    <div class="flex items-center justify-between">
-      <div class="flex items-start">
-        <UCheckbox name="remember" label="Remember me"/>
-      </div>
-      <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
+    <div class="flex items-center justify-end">
+      <!--      <div class="flex items-start">-->
+      <!--        <UCheckbox name="remember" label="Remember me"/>-->
+      <!--      </div>-->
+      <a href="#" class=" text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
         password?</a>
     </div>
+
     <UButton block type="submit">
       Sign in
     </UButton>
-    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+
+    <UDivider/>
+    <p class="text-sm text-center font-light text-gray-500 dark:text-gray-400">
       Don’t have an account yet?
       <NuxtLink
           to="register"

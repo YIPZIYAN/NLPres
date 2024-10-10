@@ -1,0 +1,1 @@
+export const useVerify = () => useState<boolean>('isVerify', () => false)
