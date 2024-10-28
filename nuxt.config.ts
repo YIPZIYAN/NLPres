@@ -30,6 +30,11 @@ export default defineNuxtConfig({
       '@vueuse/motion/nuxt',
       '@sidebase/nuxt-auth',
     ],
+    runtimeConfig:{
+        public:{
+            baseUrl: 'http://127.0.0.1:8000/api',
+        }
+    },
     auth: {
         globalAppMiddleware: true,
         baseURL: 'http://127.0.0.1:8000/api/auth/',

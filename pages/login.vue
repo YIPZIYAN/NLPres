@@ -38,9 +38,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }
 }
 
-const verify = useVerify();
-console.log(verify.value);
-
 </script>
 
 <template>

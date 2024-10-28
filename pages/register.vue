@@ -16,6 +16,7 @@ type Schema = InferType<typeof schema>
 const formData = reactive({
   username: '',
   email: '',
+  password: '',
   password1: '',
   password2: '',
 })
@@ -27,7 +28,8 @@ const schema = object({
   password2: string().required('Please confirm your password.')
       .test('passwords-match', 'Passwords must match.', function (value) {
         return this.parent.password1 === value
-      })
+      }),
+  password: string()
 })
 
 const {signUp} = useAuth()
@@ -38,19 +40,16 @@ const showPassConfirm = ref(false);
 const error = ref();
 const loading = ref();
 
-const verify = useVerify();
-
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   error.value = undefined;
   loading.value = true;
+  event.data.password = event.data.password1;
+
   try {
     await signUp(
         {...event.data},
-        { callbackUrl: '/', redirect: true },
-        {preventLoginFlow: true}).then(value => {
-      route.push('/login');
-      verify.value = true;
-    })
+        {callbackUrl: '/', redirect: true}
+    )
   } catch (e) {
     error.value = e.response._data;
   } finally {
@@ -78,11 +77,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </template>
   </UAlert>
 
-<!--  <UAlert v-if="success"-->
-<!--          title="Thanks for signing up."-->
-<!--          color="primary"-->
-<!--          variant="solid"-->
-<!--          description="An email verification sent. Please check your email to verify."/>-->
+  <!--  <UAlert v-if="success"-->
+  <!--          title="Thanks for signing up."-->
+  <!--          color="primary"-->
+  <!--          variant="solid"-->
+  <!--          description="An email verification sent. Please check your email to verify."/>-->
 
   <UForm :schema="schema" :state="formData"
          @submit="onSubmit" method="post" class="space-y-4 md:space-y-6">
