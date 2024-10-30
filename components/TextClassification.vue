@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import type {Label} from "~/server/api/label";
+import type {Label} from "~/types/label";
 
 const props = defineProps({
   labels: Array<Label>,

@@ -1,8 +1,21 @@
 <script lang="ts" setup>
 
+import {useAuth} from "#imports";
+
 definePageMeta({
   layout: 'guest',
 })
+
+const {token} = useAuth()
+
+const { data } = await useFetch('api/project/', {
+  headers: {
+    Authorization: `${token.value}`
+  }
+})
+
+console.log(data.value)
+
 
 const users = [{
   id: 1,
@@ -18,27 +31,27 @@ const projects = [{
   label: 'Code Mixed Twitter',
   description: '202401 ISpark Project',
   user: users.at(0),
-  type:"Sequential Labeling",
+  type: "Sequential Labeling",
   created_at: "2024-01-03",
 }, {
   id: 2,
   label: 'Facebook Sentiment Analysis',
   description: '202401 ISpark Project',
   user: users.at(1),
-  type:"Text Classification",
+  type: "Text Classification",
   created_at: "2024-01-03",
 }, {
   id: 3,
   label: 'NLP Assignment',
   description: '202401 ISpark Project',
   user: users.at(0),
-  type:"Sequential Labeling",
+  type: "Sequential Labeling",
   created_at: "2024-01-03",
 }, {
   id: 4,
   label: 'NER Assignment',
   description: '202401 ISpark Project',
-  type:"Sequential Labeling",
+  type: "Sequential Labeling",
   user: users.at(0),
   created_at: "2024-01-03",
 }]
@@ -76,7 +89,7 @@ const projects = [{
                 <p class="truncate text-xl">{{ project.label }}</p>
                 <p class="truncate text-sm">{{ project.description }}</p>
                 <p class="truncate text-sm">{{ project.user?.name }}</p>
-                <UBadge class="mt-2" color="white" :label="project.type" />
+                <UBadge class="mt-2" color="white" :label="project.type"/>
               </div>
             </div>
           </template>

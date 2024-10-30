@@ -23,6 +23,9 @@ import {definePreset} from "@primeuix/styled";
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: {enabled: true},
+    runtimeConfig:{
+      myProxyUrl:'http://127.0.0.1:8000/'
+    },
     modules: [
       "@nuxt/ui",
       "@primevue/nuxt-module",
@@ -30,11 +33,6 @@ export default defineNuxtConfig({
       '@vueuse/motion/nuxt',
       '@sidebase/nuxt-auth',
     ],
-    runtimeConfig:{
-        public:{
-            baseUrl: 'http://127.0.0.1:8000/api',
-        }
-    },
     auth: {
         globalAppMiddleware: true,
         baseURL: 'http://127.0.0.1:8000/api/auth/',

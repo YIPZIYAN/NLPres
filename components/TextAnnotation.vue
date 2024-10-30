@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import type {Label} from "~/server/api/label";
 import TextLabel from "~/components/TextLabel.vue";
+import type {Label} from "~/types/label";
 
 const props = defineProps({
   rawtext: String,

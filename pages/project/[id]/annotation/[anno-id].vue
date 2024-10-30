@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type {Label} from "~/server/api/label";
+import type {Label} from "~/server/api/[..]]";
 
 const route = useRoute();
 let id = parseInt(route.params.annoid.toString());

@@ -35,6 +35,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     )
   } catch (e) {
     error.value = e.response._data;
+    console.log(error.value)
   }
 }
 
