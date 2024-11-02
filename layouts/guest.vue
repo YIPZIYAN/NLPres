@@ -23,10 +23,12 @@ const {data, status, getSession, signOut} = useAuth()
 const dropdownItems = [
   [{
     label: 'Profile',
-    icon: 'i-heroicons-user-circle'
+    icon: 'i-heroicons-user-circle',
+    to: '/profile',
   }, {
     label: 'Projects',
     icon: 'i-material-symbols:collections-bookmark-rounded',
+    to: '/project',
   }], [{
     label: 'Logout',
     icon: 'i-heroicons-arrow-left-start-on-rectangle',

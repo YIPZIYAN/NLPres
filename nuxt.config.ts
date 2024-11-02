@@ -46,10 +46,12 @@ export default defineNuxtConfig({
                     id: 'string | number',
                     username: 'string',
                     email: 'string',
+                    profile: {}
                 },
             },
             token: {
                 signInResponseTokenPointer: '/access',
+                cookieName: 'nlpres-auth'
             }
         },
     },
@@ -102,4 +104,7 @@ export default defineNuxtConfig({
         componentDir: './components/ui'
     },
     plugins: ["~/plugins/preline.client.ts"],
+    runtimeConfig: {
+        proxyUrl: 'http://127.0.0.1:8000/',
+    }
 })
