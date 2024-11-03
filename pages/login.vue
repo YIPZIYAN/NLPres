@@ -10,8 +10,11 @@ import {object, string, type InferType} from 'yup'
 import type {FormSubmitEvent} from '#ui/types'
 
 const schema = object({
-  email: string().email('Please enter a valid email address.').required('Please enter your email address.'),
-  password: string().required('Please enter your password.'),
+  email: string()
+      .email('Please enter a valid email address.')
+      .required('Please enter your email address.'),
+  password: string()
+      .required('Please enter your password.'),
 })
 
 type Schema = InferType<typeof schema>
@@ -25,8 +28,11 @@ const formData = reactive({
 })
 
 const error = ref();
+const loading = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
+  loading.value = true
+  error.value = undefined
   try {
     await signIn(
         {...event.data},
@@ -34,12 +40,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     )
   } catch (e) {
     error.value = e.response;
+  } finally {
+    loading.value = false
   }
 }
-
 </script>
 
 <template>
+  <div v-if="loading">
+    <UProgress animation="carousel" />
+  </div>
   <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
     Login
   </h1>
@@ -81,7 +91,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
         password?</a>
     </div>
-    <UButton block type="submit">
+    <UButton block type="submit" :disabled="loading">
       Sign in
     </UButton>
     <p class="text-sm font-light text-gray-500 dark:text-gray-400">
