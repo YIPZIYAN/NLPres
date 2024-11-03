@@ -23,6 +23,11 @@ import {definePreset} from "@primeuix/styled";
 export default defineNuxtConfig({
     compatibilityDate: '2024-04-03',
     devtools: {enabled: true},
+    runtimeConfig:{
+        public:{
+            baseUrl: 'http://127.0.0.1:8000/api/',
+        }
+    },
     modules: [
       "@nuxt/ui",
       "@primevue/nuxt-module",
@@ -38,7 +43,7 @@ export default defineNuxtConfig({
             endpoints: {
                 signIn: { path: 'login/', method: 'post' },
                 signOut: { path: 'logout/', method: 'post' },
-                signUp: { path: 'register/', method: 'post' },
+                signUp: { path: 'registration/', method: 'post' },
                 getSession: { path: 'user/', method: 'get' },
             },
             session: {
