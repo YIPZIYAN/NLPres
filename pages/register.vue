@@ -74,6 +74,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
     Register
   </h1>
+
   <UAlert v-if="error"
           color="red"
           variant="solid"
@@ -86,7 +87,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           title="Registration Successful!"
           description="Your account has been created successfully. Please log in to continue."/>
 
-
   <UForm
       :schema="schema"
       :state="formData"
@@ -97,6 +97,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
               v-model="formData.email"
               icon="i-heroicons-envelope"/>
     </UFormGroup>
+
     <UFormGroup label="Password" name="password1">
       <UInput placeholder="Enter your password"
               v-model="formData.password1"
@@ -114,6 +115,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         </template>
       </UInput>
     </UFormGroup>
+    
     <UFormGroup label="Confirm password" name="password2">
       <UInput placeholder="Re-enter your password"
               v-model="formData.password2"
@@ -135,7 +137,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <UButton block type="submit" :disabled="loading">
       Create an account
     </UButton>
-    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+
+    <UDivider/>
+
+    <p class="text-sm text-center font-light text-gray-500 dark:text-gray-400">
       Already have an account?
       <NuxtLink
           to="login"

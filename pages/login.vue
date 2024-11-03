@@ -33,6 +33,7 @@ const loading = ref(false)
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true
   error.value = undefined
+
   try {
     await signIn(
         {...event.data},
@@ -53,20 +54,29 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
     Login
   </h1>
-  <UAlert v-if="error"
+  <UAlert v-if="error!=undefined"
+          title="Please try again."
           color="red"
-          variant="solid"
-          title="Opps.."
-          description="Please check your credentials and try again."/>
+          variant="solid">
+    <template #description>
+      <div v-for="(errorMessages, field) in error" :key="field">
+        <ul class="list-disc px-4">
+          <li v-for="(message, index) in errorMessages" :key="index">{{ message }}</li>
+        </ul>
+      </div>
+    </template>
+  </UAlert>
 
   <UForm :schema="schema"
          :state="formData"
          class="space-y-4 md:space-y-6"
          @submit="onSubmit" method="post">
+
     <UFormGroup label="Email" name="email">
       <UInput placeholder="Enter your email"
               v-model="formData.email" icon="i-heroicons-envelope"/>
     </UFormGroup>
+
     <UFormGroup label="Password" name="password">
       <UInput placeholder="Enter your password"
               v-model="formData.password"
@@ -84,17 +94,21 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         </template>
       </UInput>
     </UFormGroup>
-    <div class="flex items-center justify-between">
-      <div class="flex items-start">
-        <UCheckbox name="remember" label="Remember me"/>
-      </div>
-      <a href="#" class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
+
+    <div class="flex items-center justify-end">
+      <!--      <div class="flex items-start">-->
+      <!--        <UCheckbox name="remember" label="Remember me"/>-->
+      <!--      </div>-->
+      <a href="#" class=" text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
         password?</a>
     </div>
+
     <UButton block type="submit" :disabled="loading">
       Sign in
     </UButton>
-    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+
+    <UDivider/>
+    <p class="text-sm text-center font-light text-gray-500 dark:text-gray-400">
       Don’t have an account yet?
       <NuxtLink
           to="register"
