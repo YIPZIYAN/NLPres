@@ -79,7 +79,7 @@ const dropdownItems = [
       <ButtonColorMode class="hidden md:block justify-end"/>
 
       <UDropdown v-if="status === 'authenticated'" :items="dropdownItems" :popper="{ placement: 'bottom-start' }">
-        <UButton color="white" :label="data?.username" trailing-icon="i-heroicons-chevron-down-20-solid"/>
+        <UButton color="white" :label="data?.email" trailing-icon="i-heroicons-chevron-down-20-solid"/>
       </UDropdown>
       <UButton
           v-else

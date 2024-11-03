@@ -109,7 +109,5 @@ export default defineNuxtConfig({
         componentDir: './components/ui'
     },
     plugins: ["~/plugins/preline.client.ts"],
-    runtimeConfig: {
-        proxyUrl: 'http://127.0.0.1:8000/',
-    }
+
 })
