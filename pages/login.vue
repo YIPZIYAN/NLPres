@@ -10,8 +10,11 @@ import {object, string, type InferType} from 'yup'
 import type {FormSubmitEvent} from '#ui/types'
 
 const schema = object({
-  email: string().email('Please enter a valid email address.').required('Please enter your email address.'),
-  password: string().required('Please enter your password.'),
+  email: string()
+      .email('Please enter a valid email address.')
+      .required('Please enter your email address.'),
+  password: string()
+      .required('Please enter your password.'),
 })
 
 type Schema = InferType<typeof schema>
@@ -25,23 +28,29 @@ const formData = reactive({
 })
 
 const error = ref();
+const loading = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  error.value = undefined;
+  loading.value = true
+  error.value = undefined
+
   try {
     await signIn(
         {...event.data},
         {callbackUrl: "/project"}
     )
   } catch (e) {
-    error.value = e.response._data;
-    console.log(error.value)
+    error.value = e.response._data
+  } finally {
+    loading.value = false
   }
 }
-
 </script>
 
 <template>
+  <div v-if="loading">
+    <UProgress animation="carousel" />
+  </div>
   <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
     Login
   </h1>
@@ -94,7 +103,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         password?</a>
     </div>
 
-    <UButton block type="submit">
+    <UButton block type="submit" :disabled="loading">
       Sign in
     </UButton>
 

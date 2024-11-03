@@ -43,7 +43,7 @@ export default defineNuxtConfig({
             endpoints: {
                 signIn: { path: 'login/', method: 'post' },
                 signOut: { path: 'logout/', method: 'post' },
-                signUp: { path: 'registration/', method: 'post' },
+                signUp: { path: 'register/', method: 'post' },
                 getSession: { path: 'user/', method: 'get' },
             },
             session: {
@@ -51,10 +51,12 @@ export default defineNuxtConfig({
                     id: 'string | number',
                     username: 'string',
                     email: 'string',
+                    profile: {}
                 },
             },
             token: {
                 signInResponseTokenPointer: '/access',
+                cookieName: 'nlpres-auth'
             }
         },
     },
@@ -107,4 +109,7 @@ export default defineNuxtConfig({
         componentDir: './components/ui'
     },
     plugins: ["~/plugins/preline.client.ts"],
+    runtimeConfig: {
+        proxyUrl: 'http://127.0.0.1:8000/',
+    }
 })

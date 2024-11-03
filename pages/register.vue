@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {type InferType, object, string} from "yup";
-import type {FormSubmitEvent} from "#ui/types";
+import {object, string, ref as yupRef, type InferType} from 'yup'
+import type {FormSubmitEvent} from '#ui/types'
 
 definePageMeta({
   layout: 'auth',
@@ -9,27 +9,26 @@ definePageMeta({
   },
 })
 
-const route = useRouter()
-
 type Schema = InferType<typeof schema>
 
 const formData = reactive({
-  username: '',
   email: '',
-  password: '',
   password1: '',
-  password2: '',
+  password2: ''
 })
 
 const schema = object({
-  username: string().max(255).required('Please enter your username'),
-  email: string().email('Please enter a valid email address.').required('Please enter your email address.'),
-  password1: string().required('Please enter your password.'),
-  password2: string().required('Please confirm your password.')
-      .test('passwords-match', 'Passwords must match.', function (value) {
-        return this.parent.password1 === value
-      }),
-  password: string()
+  email: string()
+      .email('Please enter a valid email address.')
+      .required('Please enter your email address.'),
+  password1: string()
+      .min(8, 'Password must be at least 8 characters.')
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+      .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+      .matches(/[0-9]/, 'Password must contain at least one number.')
+      .matches(/[@$!%*?&#_-]/, 'Password must contain at least one symbol from @$!%*?&#_-'),
+  password2: string()
+      .oneOf([yupRef('password1')], 'Confirm password must be same as password.')
 })
 
 const {signUp} = useAuth()
@@ -37,29 +36,41 @@ const {signUp} = useAuth()
 const showPass = ref(false);
 const showPassConfirm = ref(false);
 
-const error = ref();
-const loading = ref();
+const error = ref()
+const success = ref(false)
+const loading = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  error.value = undefined;
-  loading.value = true;
-  event.data.password = event.data.password1;
+  error.value = undefined
+  loading.value = true
+  success.value = false
 
   try {
     await signUp(
         {...event.data},
-        {callbackUrl: '/', redirect: true}
+        { undefined },
+        { preventLoginFlow: true }
     )
+
+    success.value = true
+    formData.email = ''
+    formData.password1 = ''
+    formData.password2 = ''
+
   } catch (e) {
-    error.value = e.response._data;
+    success.value = false
+    error.value = e.response._data
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
-
 </script>
 
 <template>
+  <div v-if="loading">
+    <UProgress animation="carousel" />
+  </div>
+
   <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
     Register
   </h1>
@@ -77,23 +88,21 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </template>
   </UAlert>
 
-  <!--  <UAlert v-if="success"-->
-  <!--          title="Thanks for signing up."-->
-  <!--          color="primary"-->
-  <!--          variant="solid"-->
-  <!--          description="An email verification sent. Please check your email to verify."/>-->
+  <UAlert v-if="success"
+          color="green"
+          variant="solid"
+          title="Registration Successful!"
+          description="Your account has been created successfully. Please log in to continue."/>
 
-  <UForm :schema="schema" :state="formData"
-         @submit="onSubmit" method="post" class="space-y-4 md:space-y-6">
-
-    <UFormGroup label="Username" name="username">
-      <UInput placeholder="Enter your username"
-              v-model="formData.username" icon="i-heroicons-user"/>
-    </UFormGroup>
-
+  <UForm
+      :schema="schema"
+      :state="formData"
+      class="space-y-4 md:space-y-6"
+      @submit="onSubmit" method="post">
     <UFormGroup label="Email" name="email">
       <UInput placeholder="Enter your email"
-              v-model="formData.email" icon="i-heroicons-envelope"/>
+              v-model="formData.email"
+              icon="i-heroicons-envelope"/>
     </UFormGroup>
 
     <UFormGroup label="Password" name="password1">
@@ -113,7 +122,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         </template>
       </UInput>
     </UFormGroup>
-
+    
     <UFormGroup label="Confirm password" name="password2">
       <UInput placeholder="Re-enter your password"
               v-model="formData.password2"
