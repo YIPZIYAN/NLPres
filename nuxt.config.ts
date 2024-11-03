@@ -51,7 +51,7 @@ export default defineNuxtConfig({
                     id: 'string | number',
                     username: 'string',
                     email: 'string',
-                    profile: {}
+                    avatar: 'file'
                 },
             },
             token: {

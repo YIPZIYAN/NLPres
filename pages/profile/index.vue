@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {object, string, ref as yupRef, type InferType} from 'yup'
 import type { FormSubmitEvent } from '#ui/types'
-import PToast from 'primevue/toast';
-import { useToast } from 'primevue/usetoast';
-import { ref } from "vue";
+import PToast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
+import { ref } from "vue"
 
 const toast = useToast();
 const { data, token } = useAuth()
@@ -16,7 +16,7 @@ const showPassCurrent = ref(false)
 const showPassNew = ref(false)
 const showPassConfirm = ref(false)
 
-type Schema = InferType<typeof changePasswordSchema>
+type Schema1 = InferType<typeof changePasswordSchema>
 
 const changePasswordForm = reactive({
   current_password: '',
@@ -26,7 +26,7 @@ const changePasswordForm = reactive({
 
 const changePasswordSchema = object({
   current_password: string()
-      .required('Please enter your password'),
+      .required('Please enter your password.'),
   new_password: string()
       .min(8, 'Password must be at least 8 characters.')
       .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
@@ -37,13 +37,13 @@ const changePasswordSchema = object({
       .oneOf([yupRef('new_password')], 'Confirm password must be same as new password.')
 })
 
-const loading = ref(false)
+const changePwdLoading = ref(false)
 
-async function onChangePasswordSubmit(event: FormSubmitEvent<Schema>) {
-  loading.value = true
+async function onChangePasswordSubmit(event: FormSubmitEvent<Schema1>) {
+  changePwdLoading.value = true
 
   try {
-    await $fetch('http://127.0.0.1:8000/profile/change-password/', {
+    await $fetch(useRuntimeConfig().public.baseUrl + 'profile/change-password/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -81,12 +81,11 @@ async function onChangePasswordSubmit(event: FormSubmitEvent<Schema>) {
     }
 
   } finally {
-    loading.value = false
+    changePwdLoading.value = false
   }
 }
 
-
-const src = ref(null);
+const src = ref(data.value?.avatar || '/img/null_avatar.png');
 
 interface FileUploadSelectEvent {
   files: File[];
@@ -94,8 +93,9 @@ interface FileUploadSelectEvent {
 
 function onFileSelect(event: FileUploadSelectEvent) {
   const file = event.files[0];
+  generalInfoForm.avatar = file
+  console.log(file)
   const reader = new FileReader();
-
   reader.onload = async (e) => {
     src.value = e.target.result;
   };
@@ -103,33 +103,62 @@ function onFileSelect(event: FileUploadSelectEvent) {
   reader.readAsDataURL(file);
 }
 
+type Schema2 = InferType<typeof generalInfoSchema>
 
-
-const generalSchema = object()
-
-type GeneralSchema = z.output<typeof generalSchema>
-
-const generalState = reactive({
-  email: data.value?.email,
+const generalInfoForm = reactive({
+  avatar: null as File | null
 })
 
-async function onGeneralSubmit(event: FormSubmitEvent<GeneralSchema>) {
+const generalInfoSchema = object({
+  avatar: string()
+      .required('Please select an image.'),
+})
+
+const generalInfoLoading = ref(false)
+
+async function onGeneralInfoSubmit(event: FormSubmitEvent<Schema2>) {
+  generalInfoLoading.value = true
+  const formData = new FormData();
+  formData.append('avatar', generalInfoForm.avatar as File);
+
   try {
-    await $fetch('http://127.0.0.1:8000/profile/update/', {
+    await $fetch(useRuntimeConfig().public.baseUrl + 'profile/update/', {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `${token.value}`,
       },
+      body: formData,
     })
-  } catch (error) {
 
+    generalInfoForm.avatar = null
+
+    toast.add({
+      severity: 'success',
+      summary: 'Profile Update Successful!',
+      detail: 'Your profile information has been updated.',
+      life: 5000
+    })
+
+  } catch (e) {
+    for (const field in e.response._data) {
+      if (e.response._data.hasOwnProperty(field)) {
+        const errorMessages = e.response._data[field]
+        errorMessages.forEach((message) => {
+          toast.add({
+            severity: 'error',
+            summary: 'Profile Update Failed.',
+            detail: message,
+            life: 5000
+          })
+        })
+      }
+    }
+
+  } finally {
+    generalInfoLoading.value = false
   }
 
 }
-
-
-
 
 </script>
 
@@ -149,36 +178,39 @@ async function onGeneralSubmit(event: FormSubmitEvent<GeneralSchema>) {
 
       <div class="col-span-full">
         <div class="p-4 mb-8 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+          <div v-if="generalInfoLoading" class="mt-2 mb-4">
+            <UProgress animation="carousel" />
+          </div>
           <h3 class="mb-4 text-xl font-semibold dark:text-white">General information</h3>
-          <UForm :schema="generalSchema" :state="generalState" class="space-y-4" @submit.prevent="onGeneralSubmit">
-            <h3 class="mb-1 text-sm font-bold text-gray-900 dark:text-white">Avatar</h3>
+          <UForm :schema="generalInfoSchema" :state="generalInfoForm" class="space-y-4" @submit.prevent="onGeneralInfoSubmit">
 
             <div class="items-center sm:flex xl:block 2xl:flex sm:space-x-4 xl:space-x-0 2xl:space-x-4">
-              <UAvatar
-                  size="2xl"
-                  :src="src"
-                  alt="Avatar"
-              />
+              <UFormGroup name="avatar" label="Avatar">
 
                 <div class="flex items-center space-x-4">
+                  <UAvatar
+                      class="mt-2"
+                      size="2xl"
+                      :src="src"
+                      alt="Avatar"
+                  />
                   <PFileUpload size="small" mode="basic" @select="onFileSelect" customUpload auto severity="secondary" class="p-button-outlined" accept="image/*" :maxFileSize="1000000" />
-                  <button type="button" class="py-2 px-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                    Delete
-                  </button>
                 </div>
+              </UFormGroup>
             </div>
 
             <div class="grid grid-cols-6 gap-6">
               <UFormGroup label="Email" name="email" class="col-span-6 sm:col-span-3">
-                <UInput disabled size="lg" v-model="generalState.email" />
+                <UInput disabled size="lg" v-model="data.email" />
               </UFormGroup>
 
               <div class="col-span-6 sm:col-full">
                 <UButton
+                    :disabled="generalInfoLoading"
                     class="px-5 py-2.5"
                     type="submit"
                     size="lg"
-                    label="Save all"
+                    label="Save"
                 />
               </div>
 
@@ -187,7 +219,7 @@ async function onGeneralSubmit(event: FormSubmitEvent<GeneralSchema>) {
           </UForm>
         </div>
         <div class="p-4 mb-8 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
-          <div v-if="loading" class="mt-2 mb-4">
+          <div v-if="changePwdLoading" class="mt-2 mb-4">
             <UProgress animation="carousel" />
           </div>
           <h3 class="mb-4 text-xl font-semibold dark:text-white">Password information</h3>
@@ -203,7 +235,6 @@ async function onGeneralSubmit(event: FormSubmitEvent<GeneralSchema>) {
                         >
                   <template #trailing>
                     <UButton
-                        :disabled="loading"
                         color="gray"
                         variant="link"
                         icon="i-heroicons-eye"
@@ -254,6 +285,7 @@ async function onGeneralSubmit(event: FormSubmitEvent<GeneralSchema>) {
 
               <div class="col-span-6 sm:col-full">
                 <UButton
+                    :disabled="changePwdLoading"
                     class="px-5 py-2.5"
                     type="submit"
                     size="lg"
