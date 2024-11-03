@@ -40,7 +40,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         {callbackUrl: "/project"}
     )
   } catch (e) {
-    error.value = e.response;
+    error.value = e.response._data
   } finally {
     loading.value = false
   }

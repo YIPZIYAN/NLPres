@@ -59,7 +59,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
   } catch (e) {
     success.value = false
-    error.value = e.response
+    error.value = e.response._data
   } finally {
     loading.value = false
   }
@@ -75,11 +75,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     Register
   </h1>
 
-  <UAlert v-if="error"
+  <UAlert v-if="error!=undefined"
+          title="Please try again."
           color="red"
-          variant="solid"
-          title="Opps.."
-          description="This email is already registered."/>
+          variant="solid">
+    <template #description>
+      <div v-for="(errorMessages, field) in error" :key="field">
+        <ul class="list-disc px-4">
+          <li v-for="(message, index) in errorMessages" :key="index">{{ message }}</li>
+        </ul>
+      </div>
+    </template>
+  </UAlert>
 
   <UAlert v-if="success"
           color="green"
